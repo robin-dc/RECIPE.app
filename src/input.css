@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans:wght@300;400;500;600;700;800;900;1000&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* header: 23180d */
+/* body: 2d2013 */
+@layer base{
+    *{
+        font-family: 'Sofia Sans', sans-serif;
+    }
+    .bg-wood{
+        background: url("images/wood-bg.jpg") !important;
+        background-repeat: no-repeat !important;
+        background-position: center;
+        background-size: cover !important;
+        /* background-color: #ffffff2e; */
+    }
+    button:active:not(#search-btn){
+        scale:0.9;
+        transition: all 100ms ease-in-out;
+    }
+}

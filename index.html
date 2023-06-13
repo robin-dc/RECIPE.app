@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Foods Recipe | All in One Place</title>
+    <link href="/dist/output.css" rel="stylesheet">
+    <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
+    <link rel="shortcut icon" href="src/images/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="src/input.css">
+</head>
+<body class="bg-[#f7f7f7]">
+    <div class="overflow-hidden">
+        <!-- =============================================== NAVIGATION ============================================= -->
+        <header>
+            <nav class="container flex justify-between py-1.5 px-[1.3rem] md:px-[0.2rem]">
+                <a href="index.html" class="text-2xl text-blue-900 font-black" data-aos="fade-down" data-aos-duration="1000">RECIPE<span class="text-orange-900">.app</span></a>
+                <button class="md:hidden text-2xl text-navyBlue" id="mobile-btn">☰</button>
+                <div class="flex flex-col md:flex-row text-center md:text-left gap-2 fixed bottom-0 left-0 right-0 bg-white pt-5 pb-3 z-30 rounded-tr-[3rem] rounded-tl-[3rem] border border-gray-300 md:static md:border-none md:pt-0 md:pb-0 md:bg-transparent md:rounded-tr-none md:rounded-tl-none translate-y-[20rem] md:translate-y-0 transition-[transform] ease-in-out duration-500" id="mobile-nav">
+                    <ul class="flex mb-0 gap-4 justify-center md:justify-normal items-center md:gap-2">
+                        <li class="text-[1.5rem] md:text-[1.2rem] font-semibold md:font-normal" data-aos="fade-down" data-aos-duration="1100">
+                            <button id="categories-btn">All Categories</button>
+                        </li>
+                        <li class="text-[1.5rem] md:text-[1.2rem] font-semibold md:font-normal" data-aos="fade-down" data-aos-duration="1300">
+                            <button id="favorites-btn">Favorites</button>
+                        </li>
+                    </ul>
+                    <form class="flex justify-center md:justify-start gap-0 rounded-3xl overflow-hidden" data-aos="fade-down" data-aos-duration="1500">
+                        <input type="text" class="border border-gray-400 py-[0.6rem] px-2 rounded-s-3xl outline-none bg-transparent font-bold placeholder:font-normal uppercase placeholder:normal-case" placeholder="Enter food here." id="input">
+                        <button class="bg-black text-white rounded-e-3xl py-[0.6rem] px-2" id="search-btn">SEARCH</button>
+                    </form>
+                    <button class="md:hidden text-[3.5rem] text-black absolute top-0 right-2" id="close-btn">×</button>
+                </div>
+            </nav>
+        </header>
+
+        <!-- =============================================== FOODS WILL GO HERE ===================================== -->
+        <main class="px-1 md:px-0 py-5 container grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-2 relative min-h-screen" id="food-container">
+            <div class="col-span-2 md:col-span-4 flex flex-wrap gap-1">
+                <div class="bg-navyBlue w-full md:w-[65%] p-1 pt-2 md:p-3 rounded-[3rem] flex flex-col justify-between relative" data-aos="fade-right" data-aos-duration="1000">
+                    <button class="w-[5rem] h-[5rem] rounded-full absolute top-2 right-2 bg-white text-black text-4xl flex justify-center items-center cursor-pointer" id="arrow">&#8599;</button>
+                    <div>
+                        <span class="py-1 px-2 rounded-full border border-white font-semibold text-white">BEST FOODS RECIPES</span>
+                    </div>
+                    <div class="mt-3 mb-2">
+                        <h1 class="text-white text-4xl md:text-6xl font-bold leading-[4rem] md:leading-[6rem]">FOOD LOVER'S PARADISE</h1>
+                    </div>
+                    <div>
+                        <button class="py-1 px-2 rounded-full bg-black text-white text-[1.5rem] hover:scale-110 duration-500 transition ease-in-out" id="categories-hero-btn">CATEGORIES</button>
+                    </div>
+                </div>
+                <div class="w-full md:w-[33.5%] bg-red-200 rounded-[3rem] overflow-hidden" data-aos="fade-left" data-aos-duration="1000">
+                    <img src="src/images/hero-food.jpg" class="h-full object-cover" alt="">
+                </div>
+                <div class="w-full bg-brown rounded-[3rem] py-2 flex flex-col md:flex-row gap-1 p-2 relative overflow-hidden" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="w-full md:w-2/5  z-20">
+                        <img src="src/images/cburger.png" class="w-full z-20 " alt="">
+                    </div>
+                    <div class="flex justify-center items-center w-full md:w-1/2">
+                        <p class="text-center md:text-left text-[2.5rem] md:text-3xl font-bold z-10 leading-[2.7rem] md:leading-[4rem] text-white">Ever wonder what's the recipe of <span class="cursor-pointer" id="cheese-burger"><span class="text-yellow-600">Cheese</span><span class="text-red-600">burger</span></span>?</p>
+                        <div class="w-[24rem] h-[24rem] bg-lightBrown rounded-full absolute top-1 bottom-1"></div>
+                        <div class="w-[10rem] h-[10rem]  bg-lightBrown rounded-full absolute top-[50%] right-5"></div>
+                        <div class="w-[5rem] h-[5rem]  bg-lightBrown rounded-full absolute bottom-1 md:top-[30%] right-2"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- ====================================================================================================== -->
+    </div>
+
+    <footer class="p-1 text-center bg-black flex flex-col">
+        <div class="mt-2 mb-3">
+            <a href="index.html" class="text-white text-2xl font-black">RECIPE.app</a>
+            <p class="text-gray-300 text-[1.4rem]">Best Foods Recipe | All in One Place</p>
+        </div>
+        <a href="https://github.com/robin-dc" target="_blank" class="text-gray-400">Designed and Built by Robin Dela Cruz 2023</a>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        let execute = true;
+        function initializeAOS() {
+            if (execute) {
+                AOS.init();
+            }
+        }
+        initializeAOS()
+        window.addEventListener('scroll', () => {
+            execute = false
+        });
+    </script>
+    <script src="src/main.js"></script>
+</body>
+</html>
