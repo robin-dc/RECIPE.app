@@ -17,6 +17,7 @@
         background-size: cover !important;
         /* background-color: #ffffff2e; */
     }
+
     button:active:not(#search-btn){
         scale:0.9;
         transition: all 100ms ease-in-out;
