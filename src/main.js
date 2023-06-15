@@ -12,10 +12,12 @@ const closeBtn = document.getElementById('close-btn');
 
 const svg = `<img src="src/images/loader.svg" class="fixed top-[40%] left-[50%] right-[50%] translate-x-[-50%]" alt="">`
 
-let favoriteMeals = []
-let stringFavorites = []
+let favoriteMeals = []  // LOCAL STORAGE ARRAY WILL GO HERE AND THIS IS THE ARRAY WE CAN MODIFY
+let stringFavorites = [] // FAVORITE ITEM WRAP IN HTML TAGS WILL GO HERE
 
 let localStorageBrowser = JSON.parse(localStorage.getItem("Favorites")) // returns an array
+
+// if localStorage is existing
 if(localStorageBrowser !== null){
     favoriteMeals = localStorageBrowser
 }
@@ -40,13 +42,15 @@ async function getCategoriesData(){
                         </div>
                     </div>`
         }).join("")
-
+        // change html main container to categories
         foodContainer.innerHTML = categories
+
+        // button to show dishes under that category
         const viewCategoryBtn = document.querySelectorAll('#view-category-btn');
             viewCategoryBtn.forEach(btn => {
                 btn.addEventListener('click', () => {
                     foodContainer.innerHTML = svg
-                    getMealsData(btn.dataset.id)
+                    getMealsData(btn.dataset.id)    // fetch dishes under that category
                 })
         })
     }
@@ -61,7 +65,7 @@ async function getMealsData(category){
         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
         const data = await response.json()
         const array = data.meals
-        renderMeals(array, category)
+        renderMeals(array, category) // wrap every meals in html tags
 }
 
 function renderMeals(array, category){
@@ -81,14 +85,19 @@ function renderMeals(array, category){
                     </div>`
         }).join("")
 
+        // change html main container to meals under the chosen category
         foodContainer.innerHTML = backBtn(category) + meals
+
         // ==================================== EVENT LISTENERS IN THE MEALS SECTION =================================
-        document.getElementById('back-category-btn').addEventListener('click', () => {
+        document.getElementById('back-category-btn').addEventListener('click', () => { // go back to choosing category
             foodContainer.innerHTML = svg
             getCategoriesData()
         })
+
+        // heart button functionality
         const heartBtn = document.querySelectorAll('#heart-btn');
         heartBtn.forEach(btn => {
+            // if localstorage is not empty then change the color of the hearts of dishes that exist in local storage
             if(favoriteMeals){
                 favoriteMeals.forEach(localitem => {
                     if(localitem === btn.childNodes[0].dataset.id){
@@ -96,34 +105,37 @@ function renderMeals(array, category){
                     }
                 })
             }
+            // button click functionality
             btn.addEventListener('click', (e) => {
                 const target = e.currentTarget.childNodes[0]
-                target.classList.toggle('text-red-500')
+                target.classList.toggle('text-red-500') // toggle heart to be red or not
 
-                if(!favoriteMeals || favoriteMeals.length === 0){
+                if(!favoriteMeals || favoriteMeals.length === 0){   // if localstorage is empty
                     // alert("added to first")
-                    favoriteMeals.push(target.dataset.id)
-                    localStorage.setItem("Favorites", JSON.stringify(favoriteMeals))  // sets an array
+                    favoriteMeals.push(target.dataset.id)   // push immediately
+                    localStorage.setItem("Favorites", JSON.stringify(favoriteMeals))    // import to localStorage
                 }
-                else{
+                else{  // if localstorage is not empty
                     for(let i = 0; i < favoriteMeals.length; i++){
                         let localitem = favoriteMeals[i]
                         // console.log(localitem," with ", target.dataset.id)
-                        if(localitem === target.dataset.id){
-                            favoriteMeals.splice(i,1)
+                        if(localitem === target.dataset.id){      // check whether the item that is clicking exist
+                            favoriteMeals.splice(i,1)              // remove the item from the favorites
                             // alert("existing")
                             localStorage.removeItem('Favorites')
-                            localStorage.setItem("Favorites", JSON.stringify(favoriteMeals))  // sets an array
-                            stringFavorites = []
+                            localStorage.setItem("Favorites", JSON.stringify(favoriteMeals))  // update the favorites
+                            stringFavorites = []    // remove favorites that wraps with html tags
                             return
                         }
                     }
                     // alert("added to favorites list")
-                    favoriteMeals.push(target.dataset.id)
-                    localStorage.setItem("Favorites", JSON.stringify(favoriteMeals))  // sets an array
+                    favoriteMeals.push(target.dataset.id)   // if not exist, just add to favorites immediately
+                    localStorage.setItem("Favorites", JSON.stringify(favoriteMeals))    // update the favorites
                 }
             })
         })
+
+        // view recipe button functionality
         const viewRecipeBtn = document.querySelectorAll('#view-recipe-btn');
         viewRecipeBtn.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -140,6 +152,7 @@ async function getRecipeData(meal) {
         const data = await response.json()
         const object = data.meals[0]
 
+        // change html main container to recipes of the chosen meal
         foodContainer.innerHTML = `<button class="rounded-full bg-white shadow-lg cursor-pointer border border-gray-200 w-3 h-3 absolute top-0 left-1 lg:left-0 flex justify-center items-center" id="back-meals-btn"><i class="fa-solid fa-arrow-left text-black"></i></button>
         <div class="col-span-4 flex flex-col gap-1 lg:gap-3">
             <div class="rounded-2xl shadow-xl pt-2 p-1 lg:p-3 leading-[3rem] border border-gray-200" >
@@ -167,6 +180,8 @@ async function getRecipeData(meal) {
                 <iframe class="w-full h-[23rem] lg:h-[35rem] my-2 md:my-3 rounded-2xl" src="https://www.youtube.com/embed/${getEmbeddedCode(object.strYoutube)}" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>`
+
+        // button to go back to meals under that category
         document.getElementById('back-meals-btn').addEventListener('click', () => {
             foodContainer.innerHTML = svg
             getMealsData(object.strCategory)
@@ -193,22 +208,31 @@ searchBtn.addEventListener('click', (e) => {
     }
 
 })
+// category btn on navigation
 categoriesBtn.addEventListener('click', () => {
     foodContainer.innerHTML = svg
     getCategoriesData()
 })
+
+// category btn in home page
 categoriesHeroBtn.addEventListener('click', () => {
     foodContainer.innerHTML = svg
     getCategoriesData()
 })
+
+// cheese burger on home page
 cheeseBurger.addEventListener('click', () => {
     foodContainer.innerHTML = svg
     getRecipeData('Big Mac')
     scrollToTop()
 })
+
+// arrow on homepage
 arrowBtn.addEventListener('click', () => {
     input.focus();
 });
+
+// mobile nav burger menu
 mobileBtn.addEventListener("click", ()=> {
     mobileNav.classList.toggle("translate-y-[20rem]")
     mobileNav.classList.toggle("translate-y-0")
@@ -226,7 +250,7 @@ favoritesBtn.addEventListener('click', () =>{
 
 function  getFavoritesData(){
 
-    if(!favoriteMeals || favoriteMeals.length === 0){
+    if(!favoriteMeals || favoriteMeals.length === 0){   // if favorites container is empty
         favoriteError()
     }
     else{
@@ -257,29 +281,32 @@ function renderFavoriteMeal(meal,length){
                     </div>
                 </div>`
 
-                stringFavorites.push(meals)
-                let set = new Set(stringFavorites)
+                stringFavorites.push(meals) // push favorites that wrap in html tags
+                let set = new Set(stringFavorites)  // filter string favorites to have no duplicates
 
-                if(set.size === length){
-                    foodContainer.innerHTML = [...set].join("")
+                if(set.size === length){    // if string favorites is equal to number of favorites
+                    foodContainer.innerHTML = [...set].join("") // change the main container to favorites
                 }
+
+                // heart btn functionality on favorite meals
                 const heartBtn = document.querySelectorAll('#heart-btn');
                 heartBtn.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
+                    btn.addEventListener('click', (e) => {      // function just to remove the meal from favorites
                         const target = e.currentTarget.childNodes[0]
-                        target.classList.remove('text-red-500')
+                        target.classList.remove('text-red-500') // remove red button
                         target.classList.add('text-gray-300')
                         for(let i = 0; i < favoriteMeals.length; i++){
-                            if(favoriteMeals[i] === target.dataset.id){
-                                favoriteMeals.splice(i,1)
+                            if(favoriteMeals[i] === target.dataset.id){     // condition to check where the btn belongs to
+                                favoriteMeals.splice(i,1)   // remove the meal from favorites
                                 localStorage.removeItem('Favorites')
-                                localStorage.setItem("Favorites", JSON.stringify(favoriteMeals))
-                                getFavoritesData()
-                                stringFavorites = []
+                                localStorage.setItem("Favorites", JSON.stringify(favoriteMeals))    // update localStorage
+                                getFavoritesData()  // re render the html main container
+                                stringFavorites = []    // remove favorites that wraps with html tags
                             }
                         }
                     })
                 })
+                // view recipe of the chosen favorite meal
                 const viewRecipeBtn = document.querySelectorAll('#view-recipe-btn');
                 viewRecipeBtn.forEach(btn => {
                     btn.addEventListener('click', () => {
@@ -294,7 +321,7 @@ function renderFavoriteMeal(meal,length){
 
 // =================================================== HELPER FUNCTIONS =============================================
 
-function shortenDescription(description){
+function shortenDescription(description){   // for categories description
     newDesc = ""
     for(let i = 0; i < description.length; i++){
         if(description[i] == "." || description[i] == ";"){
@@ -305,7 +332,7 @@ function shortenDescription(description){
     return description + "."
 }
 
-function shortenTitle(title){
+function shortenTitle(title){   // for meals title
     const arrayTitle = title.split(" ")
 
     for(let i = 0; i < arrayTitle.length; i++){
@@ -316,7 +343,7 @@ function shortenTitle(title){
     return title
 }
 
-function renderIngredients(data){
+function renderIngredients(data){   // for recipe data
     let count = 1;
     let ingredients = []
 
@@ -329,11 +356,11 @@ function renderIngredients(data){
     return ingredients.join("")
 }
 
-function renderInstructions(data){
+function renderInstructions(data){ // for recipe data
     let period = 0;
     let str = ""
     let steps = []
-
+    // function to arrange the steps equally for every step container
     for(let i = 0; i < data.length; i++){
         if(i > 5 && !isNaN(Number(data[i])) && data[i+1] === "."){
             // console.log("Step:"+ (steps.length+1) + "Number:" + data[i])
@@ -369,7 +396,7 @@ function renderInstructions(data){
     return steps.join("")
 }
 
-function getEmbeddedCode(link){
+function getEmbeddedCode(link){     // for youtube link on recipe data
     let code = ""
 
     for(let i=link.length-1; i >= 0; i--){
@@ -379,6 +406,8 @@ function getEmbeddedCode(link){
         code+=link[i]
     }
 }
+
+// ==================================== ERRORS RENDERING =================================
 function foodError(){
     foodContainer.innerHTML = `<p class="absolute top-[30%] left-[50%] right-[50%] translate-x-[-50%] text-gray-400 text-[1.6rem] md:text-2xl font-semibold block w-full text-center">The food you are craving cannot be found.</p>`
 }
@@ -388,10 +417,12 @@ function foodMissing(){
 function favoriteError(){
     foodContainer.innerHTML = `<p class="absolute top-[30%] left-[50%] right-[50%] translate-x-[-50%] text-gray-400 text-[1.6rem] md:text-2xl font-semibold block w-full text-center">Your favorite foods is empty.</p>`
 }
+
+// ==================================== BACK BTN FOR CATEGORY THAT WAS CHOSEN =================================
 function backBtn(category){
     return `<button class="rounded-full bg-white shadow-lg cursor-pointer border border-gray-200 px-1 h-3 absolute top-0 lg:left-0 left-1 flex justify-center items-center gap-[0.5rem]" id="back-category-btn"><i class="fa-solid fa-arrow-left text-black"></i><span class="font-semibold">${category} Category</span></button>`
 }
-
+// scrolls to top
 function scrollToTop(){
     window.scrollTo({
         top: 0,
