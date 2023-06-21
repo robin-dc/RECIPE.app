@@ -8,7 +8,20 @@ I bet you saw all kinds of recipe app out there, but you never seen mine. I maxi
 
 <br>
 
-<a href="https://favoriterecipes.vercel.app/" target="_blank"><img src='https://'></a>
+1. Select a Category: Choose a category that interests you from a wide range of options available.
+<img src='https://github.com/robin-dc/RECIPE.app/blob/main/src/images/recipe_preview1.png'>
+
+<br>
+
+2. Explore Recipes: Discover the recipe for every meal within your chosen category. You can also add your favorite recipes to a dedicated favorites list for quick access.
+
+<img src='https://github.com/robin-dc/RECIPE.app/blob/main/src/images/recipe_preview2.png'>
+
+<br>
+
+3. Manage Favorites: Easily access and view the list of recipes you have favorited. If you wish to remove any recipe from your favorites, you can do so effortlessly.
+
+<img src='https://github.com/robin-dc/RECIPE.app/blob/main/src/images/recipe_preview3.png'>
 
 <br>
 
